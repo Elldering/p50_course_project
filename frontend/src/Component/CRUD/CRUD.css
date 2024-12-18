@@ -1,0 +1,778 @@
+.crud-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; /* Включаем вертикальный скролл */
+    max-width: 90%; /* Ограничиваем ширину контейнера */
+    width: 100%; /* Занимает всю доступную ширину */
+    height: calc(100vh - 4rem); /* Учитываем отступы сверху и снизу */
+    margin: 2rem auto; /* Центрируем контейнер с небольшим отступом */
+    padding: 1.5rem;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(42, 36, 61, 0.45); /* Прозрачный фон */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+    box-sizing: border-box; /* Включаем padding в расчёт ширины и высоты */
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+
+}
+
+label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+
+
+.crud-button{
+    padding: 12px 16px;
+  background: linear-gradient(145deg, #2a2a3b, #232333); /* Градиентный фон */
+  border: 1px solid #39394b; /* Акцентная граница */
+  color: #f0f0f0; /* Светлый текст */
+  border-radius: 8px; /* Закруглённые углы */
+
+
+  font-size: 14px;
+  word-break: break-word; /* Перенос длинных строк */
+  transition: all 0.3s ease-in-out; /* Плавный эффект при наведении */
+}
+
+.crud-button:hover {
+    background-color: #719fd0;
+}
+
+.crud-table {
+    display: flex;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.crud-table th,
+.crud-table td {
+    padding: 10px;
+    border: 1px solid #2a2a2e;
+    text-align: left;
+}
+
+.crud-table th {
+    background-color: #333;
+}
+
+.crud-action-button {
+    padding: 12px 16px;
+  background: linear-gradient(145deg, #2a2a3b, #232333); /* Градиентный фон */
+  border: 1px solid #39394b; /* Акцентная граница */
+  color: #f0f0f0; /* Светлый текст */
+  border-radius: 8px; /* Закруглённые углы */
+
+
+  font-size: 14px;
+  word-break: break-word; /* Перенос длинных строк */
+  transition: all 0.3s ease-in-out; /* Плавный эффект при наведении */
+
+    transition: background-color 0.3s ease;
+}
+
+
+.pagination {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.pagination-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination-button:hover {
+    background-color: #0056b3;
+}
+
+
+.sidebar {
+
+    left: 0;
+    top: 60px;
+    height: calc(100% - 60px);
+    width: 250px;
+    background-color: #f2f2f2;
+    border-radius: 0px 0px 15px 0px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 9;
+    opacity: 90%;
+    /* border-left: dotted; */
+    transition: transform 0.3s ease-in-out;
+    align-items: flex-start;
+}
+
+
+/* Чекбокс для управления меню */
+#toggle-sidebar {
+    display: none;
+    z-index: 40;
+}
+
+/* Свёрнутая панель */
+#toggle-sidebar:checked ~ .sidebar {
+    transform: translateX(-2050px);
+}
+
+/* Основной контент */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100%;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* Сдвиг основного контента при свёрнутой панели */
+#toggle-sidebar:checked ~ .crud-container {
+    margin-left: 250px;
+}
+
+/* Ссылки меню */
+.sidebar a {
+    color: #575757;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border-radius: 4px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+    color: white;
+}
+
+.sidebar a.active {
+    background-color: rgba(248, 147, 162, 0.8);
+}
+
+/* Кнопка управления */
+.toggle-label {
+    /*position: absolute;*/
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    background-color: #ffffff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.toggle-label:hover {
+    background-color: #dc7171;
+}
+
+.toggle-label span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #bbbbbb;
+    margin: 5px auto;
+}
+
+
+.crud-controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+
+
+.crud-input {
+  flex: 2;
+}
+
+.crud-select {
+  flex: 1;
+}
+
+
+
+.crud-cards {
+  display: flex
+;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+.log-container {
+  width: 100%; /* Занимает всю ширину */
+  padding: 20px;
+  background-color: #1e1e2e; /* Тёмный фон контейнера */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* Тень вокруг контейнера */
+  color: #e0e0e0; /* Светлый текст */
+  font-family: 'Courier New', Courier, monospace; /* Современный шрифт для логов */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto; /* Включаем вертикальный скролл */
+    max-width: 90%; /* Ограничиваем ширину контейнера */
+    width: 100%; /* Занимает всю доступную ширину */
+    height: calc(100vh - 4rem); /* Учитываем отступы сверху и снизу */
+    margin: 2rem auto; /* Центрируем контейнер с небольшим отступом */
+    padding: 1.5rem;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    background-color: rgba(42, 36, 61, 0.45); /* Прозрачный фон */
+
+
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Отступ между записями */
+}
+button{
+    padding: 12px 16px;
+  background: linear-gradient(145deg, #2a2a3b, #232333); /* Градиентный фон */
+  border: 1px solid #39394b; /* Акцентная граница */
+  color: #f0f0f0; /* Светлый текст */
+  border-radius: 8px; /* Закруглённые углы */
+
+  font-size: 14px;
+  word-break: break-word; /* Перенос длинных строк */
+  transition: all 0.3s ease-in-out; /* Плавный эффект при наведении */
+}
+p{
+    padding: 12px 16px;
+  background: linear-gradient(145deg, #2a2a3b, #232333); /* Градиентный фон */
+  border: 1px solid #39394b; /* Акцентная граница */
+  color: #f0f0f0; /* Светлый текст */
+  border-radius: 8px; /* Закруглённые углы */
+
+  font-size: 14px;
+  word-break: break-word; /* Перенос длинных строк */
+  transition: all 0.3s ease-in-out; /* Плавный эффект при наведении */
+}
+.log-entry {
+  padding: 12px 16px;
+  background: linear-gradient(145deg, #2a2a3b, #232333); /* Градиентный фон */
+  border: 1px solid #39394b; /* Акцентная граница */
+  color: #f0f0f0; /* Светлый текст */
+  border-radius: 8px; /* Закруглённые углы */
+    text-align: left;
+
+  font-size: 14px;
+  word-break: break-word; /* Перенос длинных строк */
+
+}
+.crud-containerd{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    align-items: center;
+    max-width: max-content;
+    min-width: min-content;
+
+    padding: 1.2rem;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    background-color: #2a243d73;
+    box-shadow: 0px 0px 13px 10px rgb(0 0 0 / 14%);
+}
+
+
+
+.crud-card {
+  background-color: white;
+    display: flex;
+        flex-direction: column;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.crud-card:hover {
+  transform: translateY(-5px);
+
+}
+
+.card-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.card-body p {
+  margin: 10px 0;
+  font-size: 16px;
+  color: #acacac;
+
+}
+
+.card-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.crud-action-button.delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.crud-action-button.delete:hover {
+  background-color: #c0392b;
+}
+
+.crud-action-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.pagination-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination-button:hover {
+  background-color: #0056b3;
+}
+.card-body{
+        display: flex
+;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+select {
+
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  border: 1px solid #ccc;
+  border-radius: 8px;
+
+
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  transition: all 0.3s ease;
+}
+
+select:hover {
+  background: linear-gradient(135deg, #e0e5ec, #f8f8f8);
+}
+
+select:focus {
+  outline: none;
+  border-color: #719fd0;
+
+}
+input {
+  width: 100%;
+
+  padding: 0;
+  font-size: 1rem;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 4px;
+    padding-right: 3px;
+  color: #333;
+  background: rgba(0, 0, 0, 0.22);
+  border: none;
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4caf50;
+  background: #f9fff9;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
+}
+/* Стили для CRUD */
+.crud-select, .crud-controls {
+  background: #2a243d;
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid #4e3a8d;
+  color: #8f8f8f;
+  font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+input:hover {
+  background: #f5f5f5;
+}
+
+input:disabled {
+  background: #e0e0e0;
+  color: #aaa;
+  border-color: #ddd;
+}
+button {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6b92f7, #4a69f7);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background: linear-gradient(135deg, #4a69f7, #3b57d0);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+  background: #ccc;
+  color: #777;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+/* Стили для чекбокса */
+.crud-checkbox {
+    appearance: none; /* Убираем стандартный вид чекбокса */
+    width: 20px; /* Размер чекбокса */
+    height: 20px; /* Размер чекбокса */
+    border: 2px solid #ccc; /* Граница чекбокса */
+    border-radius: 4px; /* Сглаженные углы */
+    background-color: #fff; /* Белый фон */
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Плавные переходы */
+    padding: 12px;
+}
+
+.crud-checkbox:checked {
+    background-color: #4CAF50; /* Цвет фона, когда чекбокс отмечен */
+    border-color: #4CAF50; /* Цвет границы при отмеченном состоянии */
+}
+
+.crud-checkbox:checked::after {
+    content: ""; /* Псевдо-элемент для галочки */
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 8px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg); /* Поворот для создания галочки */
+}
+
+.crud-checkbox:focus {
+    outline: none; /* Убираем стандартную обводку при фокусе */
+    box-shadow: 0 0 5px rgba(0, 0, 255, 0.3); /* Легкая тень при фокусе */
+}
+
+.crud-checkbox:disabled {
+    background-color: #f5f5f5; /* Цвет фона для отключенного чекбокса */
+    border-color: #ddd; /* Цвет границы для отключенного чекбокса */
+    cursor: not-allowed; /* Курсор "недоступен" */
+}
+
+.crud-checkbox-label {
+    margin-left: 10px; /* Отступ для текста лейбла */
+    font-size: 16px; /* Размер текста */
+    color: #333; /* Цвет текста */
+    cursor: pointer; /* Курсор "указатель" */
+}
+
+
+/* Общий стиль */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    background-size: 200% 200%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.control-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.control-button:hover {
+    background: #555;
+}
+
+.control-button:disabled {
+    background: #ccc;
+    color: #777;
+    cursor: not-allowed;
+}
+
+
+
+
+/* Подзаголовок */
+.subheading {
+    font-size: 1rem;
+    color: #f4f4f4;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+/* Основной заголовок */
+.card h1 {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+/* Описание */
+.description {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #f4f4f4;
+    margin-bottom: 2rem;
+}
+
+/* Кнопка */
+.button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    background: #ffffff;
+    color: #333;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.button:hover {
+    background: #f1f1f1;
+    transform: scale(1.05);
+}
+
+
+.crud-datepicker {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.crud-datepicker:focus {
+    border-color: #313133;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+.crud-datepicker::placeholder {
+    color: #aaa;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.react-datepicker {
+    font-family: Arial, sans-serif;
+    display: flex
+;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.react-datepicker__header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+}
+
+.react-datepicker__day {
+    color: #333;
+}
+
+.react-datepicker__day:hover {
+    background-color: #e9ecef;
+}
+
+.react-datepicker__day--today {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.react-datepicker__month {
+        display: flex
+;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    justify-content: center;
+    padding: 10px;
+    margin: 0;
+    font-size: 14px;
+    /* background-color: #fff; */
+    border-radius: 4px;
+    flex-direction: column;
+}
+
+.react-datepicker__month-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    width: auto; /* Устанавливаем автоширину */
+}
+
+.react-datepicker__header {
+    display: flex
+;
+    flex-direction: column;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    align-items: stretch;
+
+}
+.react-datepicker__day-names{
+    gap: 10px;
+}
+.related-data-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tab-content {
+    margin-top: 20px;
+}
+
+.task-card, .resource-card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.react-datepicker__day {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    margin: 0;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #333;
+}
+
+.react-datepicker__day:hover {
+    background-color: #e9ecef;
+    color: #000;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
+}
+
+.react-datepicker__day--today {
+    border: 1px solid #007bff;
+    font-weight: bold;
+    color: #939393;
+}
+
+

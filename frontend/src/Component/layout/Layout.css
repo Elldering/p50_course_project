@@ -1,0 +1,294 @@
+.top {
+    background-color: #e0e0e0;
+    position: fixed;
+    width: 100%;
+    z-index: 10;
+    top: 0;
+}
+
+.inheader {
+    max-width: 1200px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+}
+
+main {
+        padding: 10px;
+    background-color: rgba(255, 255, 255, 0);
+
+    z-index: 20;
+
+}
+
+
+div{
+    width: fit-content;
+    display: flex;
+        color: #979797;
+
+}
+#root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    width: 100%;
+    height: 100%;
+    margin-top: 5.08rem;
+
+    padding: 0;
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+
+    font-synthesis: none;
+    max-width: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+
+
+.Main-container{
+    display: flex;
+    background-color: rgba(12, 69, 69, 0);
+}
+.view-container{
+    display: flex;
+}
+.form-container{
+    display: flex;
+    background-color: #0c4545;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+}
+
+
+/* Общие стили */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(135deg, #1e1b29, #342a44);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+}
+
+/* Стили боковой панели */
+.sidebar {
+  width: fit-content;
+  height: 100vh;
+  background: #2a243d;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+    margin: 10px;
+    border-radius: 10px;
+}
+
+
+/* Панель с вводом */
+.input-panel {
+      background: #252032;
+    border-radius: 8px;
+    margin: 40px;
+    display: flex
+;
+    padding: 20px;
+    height: fit-content;
+    align-items: center;
+
+}
+.input-panel input {
+  width: 100%;
+  background: #00000026;
+  border: none;
+  outline: none;
+  color: #fff;
+    margin-bottom: 10px;
+  font-size: 16px;
+}
+.input-panel input::placeholder {
+  color: #8f8f8f;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: linear-gradient(135deg, #1e1b29, #342a44);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+
+
+/* Стили для CRUD */
+.crud-select, .crud-controls {
+  background: #2a243d;
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid #4e3a8d;
+  color: #8f8f8f;
+  font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.crud-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.crud-action-button {
+  background: #4e3a8d;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.crud-action-button:hover {
+  background: #342f46;
+}
+.crud-action-button.delete {
+  background: #FB3569;
+}
+.crud-action-button.delete:hover {
+  background: #C62A51;
+}
+.card{
+    display: flow;
+    /* background: linear-gradient(135deg, rgba(52, 42, 68, 0.35), rgba(62, 51, 80, 0.34)); */
+    border-radius: 16px;
+    padding: 20px;
+    color: #acacac;
+
+    /* margin: 16px 0; */
+    box-shadow: inset 2px 0px 14px 0px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s cubic-bezier(0.53, 0.7, 0.71, 0.25), 0.2s ease;
+}
+.card-header {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.card-body {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* Верхняя панель */
+.top {
+  background: #2a243d;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+.top .title {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+
+.card:hover {
+    transform: scale(98%);
+}
+
+/* Заголовок карточки */
+.card-header h3 {
+  font-size: 22px;
+  color: #ffffff;
+  margin: 0 0 12px;
+
+}
+
+
+
+/* Действия карточки */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 16px;
+}
+.crud-action-button {
+  background: #3f3269;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.crud-action-button:hover {
+  background: #3d2052;
+}
+.crud-action-button.delete {
+  background: #FB3569;
+}
+.crud-action-button.delete:hover {
+  background: #C62A51;
+}
+
+.card-group {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.group-title {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+.group-content p {
+  margin: 5px 0;
+}
+/* Разделение между группами ссылок */
+.group { /* Оборачиваем каждую группу ссылок в div с классом group */
+  margin-bottom: 30px;
+    background-color: rgba(12, 69, 69, 0.22);
+    border-radius: 10px;
+}
+.header{
+    margin-bottom: 30px;
+    padding: 20px;
+    width: 100%;
+    background-color: rgba(36, 217, 217, 0.22);
+    border-radius: 10px;
+    font-size: large;
+}
