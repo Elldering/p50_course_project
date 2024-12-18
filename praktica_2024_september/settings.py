@@ -114,7 +114,7 @@ DATABASES = {
 
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'K_2024_09',
+        'NAME': 'Task_Projects',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
