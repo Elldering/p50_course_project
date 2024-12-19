@@ -30,35 +30,15 @@ def is_admin(user):
 
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include
-from django.views import *
-from django.urls import path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView
 )
 
-router = DefaultRouter()
-router.register(r'roles', RoleViewSet)
-router.register(r'users', UserViewSet)
-router.register(r'profiles', ProfileViewSet)
-router.register(r'resource_types', ResourceTypeViewSet)
-router.register(r'resources', ResourceViewSet)
-router.register(r'projects', ProjectViewSet)
-router.register(r'stages', StageViewSet)
-router.register(r'tasks', TaskViewSet)
-router.register(r'material_distributions', MaterialDistributionViewSet)
-router.register(r'finances', FinanceViewSet)
-router.register(r'action_logs', ActionLogViewSet)
-router.register(r'task_reports', TaskReportViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('get_user_role/', get_user_role),
-    path('', include(router.urls)),
-    # path('', home, name='home'),
-    # path('admin_view/', include('construction.routing_admin')),
-    # path('employeer_view/', include('construction.routing_employeer')),
-    # path('stage_manager_view/', include('construction.routing_stage_manager')),
 
     path('login2/', login_view, name='login2'),
     path('logout2/', logout_view, name='logout2'),
@@ -71,17 +51,9 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('user/me/', UserDetailView.as_view(), name='user-detail'),
     path('logout/', LogoutAPIView.as_view(), name='logout'),
-
     path('api/register/', register, name='register'),
-
     path('api/logs/', get_logs, name='get_logs'),
-
     path('api/user-statistics/', user_statistics, name='user-statistics'),
-
     path("backup/", backup_database, name="backup_database"),
-
     path('spaghetti/', plate, name='spaghetti'),
-
-    # path('api/logs/', get_logs, name='get_logs'),
-
 ]
