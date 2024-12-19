@@ -9,7 +9,7 @@ on:
       - frontend
 
 jobs:
-  syntax-check:
+  auto-format:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,11 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install flake8
+          pip install black flake8
+
+      - name: Run autoformatter
+        run: |
+          black .
 
       - name: Run syntax check
         run: |
