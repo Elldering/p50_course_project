@@ -82,7 +82,6 @@ urlpatterns = [
 
     path('spaghetti/', plate, name='spaghetti'),
 
-
     # path('api/logs/', get_logs, name='get_logs'),
 
 ]
