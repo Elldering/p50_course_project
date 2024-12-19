@@ -1,4 +1,3 @@
-import base64
 import os
 from io import BytesIO
 from django.apps import apps
@@ -11,40 +10,33 @@ from django.utils import timezone
 from subprocess import run, CalledProcessError
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from construction.permissions import *
-import io
+from construction.permissions import IsAdminUser
 import logging
-import subprocess
 from datetime import datetime
-
 from praktica_2024_september.settings import BACKUP_DIR
-from .models import *
-from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import render
 import base64
 import matplotlib.pyplot as plt
-
-
-# Миксин для ограничения доступа по ролям (например, для админов)
-class AdminRequiredMixin(PermissionRequiredMixin):
-    permission_required = 'is_admin'  # Создайте права доступа в соответствии с вашим проектом
-
-
 from django.contrib import messages
 from .forms import CustomLoginForm
+from rest_framework import viewsets, status
+from .serializers import *
+from rest_framework.filters import OrderingFilter, SearchFilter
+
+
+class AdminRequiredMixin(PermissionRequiredMixin):
+    permission_required = 'is_admin'
 
 
 def login_view(request):
     if request.user.is_authenticated:
-        return redirect('dashboard')  # Перенаправляем на главную страницу для авторизованных пользователей
+        return redirect('dashboard')
 
     if request.method == "POST":
         form = CustomLoginForm(request, data=request.POST)
@@ -75,11 +67,6 @@ def logout_view(request):
 @login_required
 def dashboard_view(request):
     return render(request, 'dashboard.html')
-
-
-from rest_framework import viewsets, status
-from .serializers import *
-from rest_framework.filters import OrderingFilter, SearchFilter
 
 
 class RoleViewSet(viewsets.ModelViewSet):
@@ -115,7 +102,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
     search_fields = ['id']
 
 
-# Продолжите для остальных моделей аналогично:
 class ResourceTypeViewSet(viewsets.ModelViewSet):
     queryset = ResourceType.objects.all()
     serializer_class = ResourceTypeSerializer
@@ -325,16 +311,6 @@ def register(request):
     return Response({"message": "Необходимо указать username и password"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# def get_logs(request):
-#     log_file_path = 'logs/django_logs.log'
-#     if os.path.exists(log_file_path):
-#         with open(log_file_path, 'r') as log_file:
-#             logs = log_file.readlines()
-#         return JsonResponse({'logs': logs}, safe=False)
-#     else:
-#         return JsonResponse({'error': 'Log file not found'}, status=404)
-
-
 class DatabaseLogHandler(logging.Handler):
     def emit(self, record):
         try:
@@ -349,7 +325,6 @@ class DatabaseLogHandler(logging.Handler):
 
 
 logger = logging.getLogger(__name__)
-
 User = get_user_model()
 
 
@@ -365,7 +340,6 @@ def user_statistics(request):
         .order_by('month')
     )
 
-    # Формирование ответа
     data = {
         'role_statistics': list(role_counts),  # Статистика по ролям
         'monthly_statistics': list(monthly_counts),  # Статистика по месяцам
@@ -374,22 +348,20 @@ def user_statistics(request):
 
 
 def get_logs(request):
-    # Извлекаем последние 10 записей из логов
     logs = []
     with open('logs/django.log', 'r') as file:
-        logs = file.readlines()[-10:]
+        logs = file.readlines()[-7:]
     return JsonResponse({'logs': logs})
 
 
 @api_view(['GET'])
 def get_user_role(request):
-    user = get_object_or_404(User, id=request.user.id)  # Получение пользователя по ID
+    user = get_object_or_404(User, id=request.user.id)
 
-    # Проверка, есть ли связанная роль
     if hasattr(user, 'role') and user.role is not None:
-        role_name = user.role.name  # Получение имени роли
+        role_name = user.role.name
     else:
-        role_name = "Роль не назначена"  # Если роль отсутствует
+        role_name = "Роль не назначена"
 
     return JsonResponse({"role": role_name})
 
@@ -405,11 +377,9 @@ def generate_base64_image(fig):
 
 
 def user_statistics(request):
-    # Статистика по ролям пользователей
     role_data = User.objects.values('role__name').annotate(count=Count('id'))
     total_users = User.objects.count()
 
-    # Проверяем, есть ли пользователи
     if total_users == 0:
         return JsonResponse({
             'role_chart': None,
@@ -421,17 +391,14 @@ def user_statistics(request):
             }
         })
 
-    # Соотношение ролей
     roles = [str(entry['role__name']) if entry['role__name'] is not None else "Неизвестно" for entry in role_data]
     role_counts = [entry['count'] for entry in role_data]
 
-    # Соотношение ролей в процентах
     role_percentages = [
         {"role": role, "percentage": round((count / total_users) * 100, 2)}
         for role, count in zip(roles, role_counts)
     ]
 
-    # Генерация графика для ролей
     fig1, ax1 = plt.subplots()
     ax1.bar(roles, role_counts, color='skyblue')
     ax1.set_title('Количество пользователей по ролям')
@@ -440,7 +407,6 @@ def user_statistics(request):
     role_chart_base64 = generate_base64_image(fig1)
     plt.close(fig1)
 
-    # Статистика по месяцам регистрации
     current_year = timezone.now().year
     monthly_data = (
         User.objects
@@ -453,15 +419,15 @@ def user_statistics(request):
 
     months = [entry['month'] for entry in monthly_data]
     counts = [entry['count'] for entry in monthly_data]
-    total_new_users = sum(counts)  # Общее количество новых пользователей
+    total_new_users = sum(counts)
 
-    # Генерация графика для месяцев
+
     fig2, ax2 = plt.subplots()
     ax2.plot(months, counts, marker='o', linestyle='-', color='orange')
     ax2.set_title('Новые пользователи по месяцам')
     ax2.set_xlabel('Месяц')
     ax2.set_ylabel('Количество')
-    ax2.set_xticks(range(1, 13))  # Устанавливаем месяцы от 1 до 12
+    ax2.set_xticks(range(1, 13))
     ax2.set_xticklabels([
         'Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн',
         'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'
@@ -469,7 +435,6 @@ def user_statistics(request):
     monthly_chart_base64 = generate_base64_image(fig2)
     plt.close(fig2)
 
-    # Возвращаем base64 графики и текстовые данные
     return JsonResponse({
         'role_chart': role_chart_base64,
         'monthly_chart': monthly_chart_base64,
@@ -483,7 +448,6 @@ def user_statistics(request):
 
 def backup_database(request):
     try:
-        # Создание резервной копии через django-dbbackup
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         output_filename = f"backup_{timestamp}.dump"
         command = [
@@ -493,8 +457,6 @@ def backup_database(request):
             "--output-filename",
             os.path.join(BACKUP_DIR, output_filename),
         ]
-
-        # Выполнение команды резервного копирования
         run(command, check=True)
 
         return JsonResponse({
